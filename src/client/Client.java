@@ -28,6 +28,25 @@ public class Client {
       // TODO: Add a loop that writes "Hello Server" to the Server
       // and then read from the server until the Server writes back Goodbye. 
       // Print whatever the Server writes, including the terminating String.
+      while(true) {
+			
+			String newWord = "Hello Server";
+			
+			output.writeObject(newWord);
+			
+			String messageFromServer = null;
+			try {
+				messageFromServer = (String) input.readObject();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println(messageFromServer);
+			
+			if(messageFromServer.toLowerCase().equals("goodbye")) {
+				break;
+			}
+		}
 
       
       // Close the connection to the server
