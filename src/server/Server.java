@@ -25,15 +25,29 @@ public class Server {
       // Make both connection steams available 
       ObjectOutputStream output = new ObjectOutputStream(connection.getOutputStream());
       ObjectInputStream input = new ObjectInputStream(connection.getInputStream());
-      
+      int i =0;
       // TODO: Add a loop that reads from one connected client and
       // write backs "Hello Client".  Write back Goodbye to terminate
       // both the client and server.  Print whatever the Client writes.
-      
-      
-      // Close the connection
-      connection.close();
-    } catch (IOException e) {
-    }
+      while (true) {
+			String currentIn = "error";
+			try {
+				currentIn = (String) input.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Server read: " + currentIn);
+			if(i== 5) {
+				output.writeObject("Goodbye");
+				break;
+			}
+			output.writeObject("Hello Client");
+			i++;
+		}
+		connection.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
   }
 }
